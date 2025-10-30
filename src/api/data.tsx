@@ -13,13 +13,13 @@ export type Film = {
 };
 
 export async function getFilms(): Promise<Film[]> {
-  const res = await fetch(`https://ghibliapi.vercel.app/films`);
+  const res = await fetch(`https://files.manuscdn.com/user_upload_by_module/session_file/310419663032203558/zXiuvWTcBXQQoKln.json`);
   if (!res.ok) throw new Error('Failed to fetch films');
   return res.json();
 }
 
 export async function getFilmById(id: string): Promise<Film> {
-  const res = await fetch(`https://ghibliapi.vercel.app/films/${id}`);
-  if (!res.ok) throw new Error('Failed to fetch film');
-  return res.json();
-}
+  const films = await getFilms();
+  const film = films.find((f) => f.id === id);
+  if (!film) throw new Error(\`Film with id ${id} not found\`);
+  return film;
